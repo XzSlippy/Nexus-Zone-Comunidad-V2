@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Foro NexusZone</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #a0c4ff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #76a9ff;
+      font-weight: 700;
+    }
+    #nuevoTema, #listaTemas, #detalleTema {
+      max-width: 700px;
+      margin: 20px auto;
+      background: linear-gradient(135deg, #223344, #2c3e50);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #2c3e50;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #a0c4ff;
+    }
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 6px;
+      background-color: #1f2a38;
+      color: #a0c4ff;
+      font-size: 16px;
+      resize: vertical;
+    }
+    input[type="text"]::placeholder, textarea::placeholder {
+      color: #718dbf;
+    }
+    button {
+      background-color: #5f9bff;
+      border: none;
+      color: white;
+      padding: 12px 25px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #4a82e8;
+    }
+    .tema {
+      background-color: #1f2a38;
+      margin-bottom: 12px;
+      padding: 12px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 8px #3b5998;
+      transition: box-shadow 0.3s ease;
+    }
+    .tema:hover {
+      box-shadow: 0 0 15px #6ea0ff;
+    }
+    .temaTitulo {
+      font-size: 20px;
+      font-weight: 700;
+      color: #82aaff;
+    }
+    .temaAutor {
+      font-size: 14px;
+      color: #9bb9ff;
+    }
+    #detalleTema {
+      display: none;
+      color: #c3d1ff;
+    }
+    #detalleTema h2 {
+      color: #9bb9ff;
+    }
+    .comentario {
+      background-color: #2a3a54;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 6px;
+      box-shadow: 0 0 5px #5a7eff;
+    }
+    .comentarioAutor {
+      font-weight: 700;
+      color: #aac8ff;
+    }
+    .comentarioFecha {
+      font-size: 12px;
+      color: #718dbf;
+    }
+    .comentarioTexto {
+      margin-top: 5px;
+      font-size: 16px;
+      color: #c0d2ff;
+    }
+    #btnVolver {
+      margin-top: 15px;
+      background-color: #4a82e8;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Foro NexusZone</h1>
+
+  <section id="nuevoTema">
+    <h2>Crear nuevo tema</h2>
+    <label for="tituloTema">Título (máx 100 caracteres):</label>
+    <input type="text" id="tituloTema" maxlength="100" placeholder="Escribe el título del tema" />
+    <label for="contenidoTema">Contenido (máx 1000 caracteres):</label>
+    <textarea id="contenidoTema" maxlength="1000" rows="5" placeholder="Escribe el contenido del tema"></textarea>
+    <button onclick="crearTema()">Publicar Tema</button>
+  </section>
+
+  <section id="listaTemas">
+    <h2>Temas</h2>
+    <div id="temasContainer"></div>
+  </section>
+
+  <section id="detalleTema">
+    <h2 id="tituloDetalle"></h2>
+    <p id="contenidoDetalle"></p>
+    <p><em>Creado por <span id="autorDetalle"></span> el <span id="fechaDetalle"></span></em></p>
+
+    <h3>Comentarios</h3>
+    <div id="comentariosContainer"></div>
+
+    <label for="nuevoComentario">Agregar comentario (máx 500 caracteres):</label>
+    <textarea id="nuevoComentario" maxlength="500" rows="3" placeholder="Escribe tu comentario aquí..."></textarea>
+    <button onclick="agregarComentario()">Comentar</button>
+    <button id="btnVolver" onclick="cerrarDetalle()">Volver a temas</button>
+  </section>
+
+  <script>
+    let temas = [];
+    let temaActivo = null;
+
+    // Guardar en localStorage
+    function guardarTemas() {
+      localStorage.setItem('temasNexusZone', JSON.stringify(temas));
+    }
+
+    // Cargar temas, filtrar los viejos
+    function cargarTemas() {
+      const datos = localStorage.getItem('temasNexusZone');
+      if (datos) {
+        temas = JSON.parse(datos);
+
+        // Convertir fechas string a Date y filtrar temas >30 días
+        const ahora = new Date();
+        temas = temas.filter(t => {
+          t.fecha = new Date(t.fecha);
+          if (t.comentarios && Array.isArray(t.comentarios)) {
+            t.comentarios = t.comentarios.map(c => {
+              c.fecha = new Date(c.fecha);
+              return c;
+            });
+          } else {
+            t.comentarios = [];
+          }
+          // Solo temas dentro de 30 días (30*24*60*60*1000 ms)
+          return (ahora - t.fecha) <= 30 * 24 * 60 * 60 * 1000;
+        });
+        guardarTemas();
+      }
+    }
+
+    function mostrarTemas() {
+      const contenedor = document.getElementById('temasContainer');
+      contenedor.innerHTML = '';
+
+      if (temas.length === 0) {
+        contenedor.innerHTML = '<p>No hay temas publicados aún.</p>';
+        return;
+      }
+
+      temas.forEach(tema => {
+        const div = document.createElement('div');
+        div.className = 'tema';
+        div.onclick = () => mostrarDetalle(tema.id);
+
+        const titulo = document.createElement('div');
+        titulo.className = 'temaTitulo';
+        titulo.textContent = tema.titulo;
+
+        const autor = document.createElement('div');
+        autor.className = 'temaAutor';
+        autor.textContent = `Creado por ${tema.autor}`;
+
+        div.appendChild(titulo);
+        div.appendChild(autor);
+        contenedor.appendChild(div);
+      });
+    }
+
+    function crearTema() {
+      const titulo = document.getElementById('tituloTema').value.trim();
+      const contenido = document.getElementById('contenidoTema').value.trim();
+
+      if (!titulo || !contenido) {
+        alert('Por favor, completa el título y el contenido.');
+        return;
+      }
+      if (titulo.length > 100) {
+        alert('El título no puede superar 100 caracteres.');
+        return;
+      }
+      if (contenido.length > 1000) {
+        alert('El contenido no puede superar 1000 caracteres.');
+        return;
+      }
+
+      const nuevoTema = {
+        id: Date.now(),
+        titulo,
+        contenido,
+        autor: 'Usuario Anónimo',
+        fecha: new Date(),
+        comentarios: []
+      };
+
+      temas.unshift(nuevoTema);
+
+      // Limpiar formulario
+      document.getElementById('tituloTema').value = '';
+      document.getElementById('contenidoTema').value = '';
+
+      guardarTemas();
+      mostrarTemas();
+    }
+
+    function mostrarDetalle(id) {
+      temaActivo = temas.find(t => t.id === id);
+      if (!temaActivo) return;
+
+      document.getElementById('nuevoTema').style.display = 'none';
+      document.getElementById('listaTemas').style.display = 'none';
+      document.getElementById('detalleTema').style.display = 'block';
+
+      document.getElementById('tituloDetalle').textContent = temaActivo.titulo;
+      document.getElementById('contenidoDetalle').textContent = temaActivo.contenido;
+      document.getElementById('autorDetalle').textContent = temaActivo.autor;
+      document.getElementById('fechaDetalle').textContent = temaActivo.fecha.toLocaleDateString();
+
+      mostrarComentarios();
+    }
+
+    function mostrarComentarios() {
+      const cont = document.getElementById('comentariosContainer');
+      cont.innerHTML = '';
+
+      if (!temaActivo.comentarios.length) {
+        cont.innerHTML = '<p>No hay comentarios aún.</p>';
+        return;
+      }
+
+      temaActivo.comentarios.forEach(c => {
+        const div = document.createElement('div');
+        div.className = 'comentario';
+
+        const autor = document.createElement('div');
+        autor.className = 'comentarioAutor';
+        autor.textContent = c.autor;
+
+        const fecha = document.createElement('div');
+        fecha.className = 'comentarioFecha';
+        fecha.textContent = c.fecha.toLocaleString();
+
+        const texto = document.createElement('div');
+        texto.className = 'comentarioTexto';
+        texto.textContent = c.texto;
+
+        div.appendChild(autor);
+        div.appendChild(fecha);
+        div.appendChild(texto);
+
+        cont.appendChild(div);
+      });
+    }
+
+    function agregarComentario() {
+      if (!temaActivo) return;
+
+      const texto = document.getElementById('nuevoComentario').value.trim();
+      if (!texto) {
+        alert('Escribe un comentario antes.');
+        return;
+      }
+      if (texto.length > 500) {
+        alert('El comentario no puede superar 500 caracteres.');
+        return;
+      }
+
+      temaActivo.comentarios.push({
+        autor: 'Usuario Anónimo',
+        texto,
+        fecha: new Date()
+      });
+
+      document.getElementById('nuevoComentario').value = '';
+      guardarTemas();
+      mostrarComentarios();
+      mostrarTemas();
+    }
+
+    function cerrarDetalle() {
+      temaActivo = null;
+      document.getElementById('nuevoTema').style.display = 'block';
+      document.getElementById('listaTemas').style.display = 'block';
+      document.getElementById('detalleTema').style.display = 'none';
+    }
+
+    // Carga inicial
+    cargarTemas();
+    mostrarTemas();
+  </script>
+
+</body>
+</html>

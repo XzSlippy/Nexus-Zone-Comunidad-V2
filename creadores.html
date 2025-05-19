@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Creadores | Servidor Pro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: linear-gradient(135deg, #2e2e2e, #3e3e3e);
+      color: #e0f7fa;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .glass-box {
+      background: #1f1f1f;
+      border: 2px solid #00bcd4;
+      border-radius: 18px;
+      box-shadow: 0 0 20px rgba(0, 188, 212, 0.4);
+      padding: 40px;
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: 2.1rem;
+      margin-bottom: 25px;
+      font-weight: 700;
+      color: #00e5ff;
+      text-shadow: 0 0 6px #00bcd4;
+    }
+
+    .creator {
+      font-size: 1.15rem;
+      margin: 15px 0;
+      color: #e0f7fa;
+    }
+
+    .creator span {
+      color: #4dd0e1;
+      font-weight: bold;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 10px;
+      background-color: #00bcd4;
+      color: #000;
+      font-weight: bold;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: 0.3s ease;
+      box-shadow: 0 0 10px rgba(0, 188, 212, 0.5);
+    }
+
+    .btn:hover {
+      background-color: #00e5ff;
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.8);
+    }
+
+    footer {
+      margin-top: 40px;
+      color: #bbb;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.6rem;
+      }
+
+      .glass-box {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glass-box">
+    <h1>Creadores del Servidor</h1>
+    
+    <div class="creator">👤 <span>Notorious</span> — Creador Y Programador de nexus zone [OWNER]</div>
+    <div class="creator">👤 <span>Ze/Sebastian</span> — Diseñador gráfico y construcción de mapas[CO-OWNER]</div>
+    <div class="creator">👤 <span>DanielYT</span> — Administracion De NexusZone [ADMIN]</div>
+    <div class="creator">👤 <span>coHANATOco</span> — Moderación y comunidad [ADMIN]</div>
+    <div class="creator">👤 <span>Montoxxz</span> — Moderacion De Comunidad [MOD]</div>
+
+    <a href="index.html" class="btn">⬅ Volver
