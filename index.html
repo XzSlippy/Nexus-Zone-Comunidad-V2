@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nexus Zone - Compra tus Rangos Minecraft</title>
+  <style>
+    /* Reset y tipografía */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #eee;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Navegación */
+    nav {
+      background-color: #141e30;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: center;
+      gap: 35px;
+      font-weight: 700;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    nav a {
+      color: #eee;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #00d8ff;
+    }
+
+    header {
+      text-align: center;
+      padding: 60px 20px 40px;
+      background: rgba(20, 30, 48, 0.85);
+      box-shadow: inset 0 0 60px #00d8ffaa;
+    }
+    header h1 {
+      margin: 0 0 12px;
+      font-size: 2.6rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #00d8ff;
+      text-shadow: 0 0 10px #00d8ffaa;
+    }
+    header p {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: #bbb;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    main {
+      flex-grow: 1;
+      max-width: 900px;
+      margin: 40px auto 80px;
+      background: rgba(20, 30, 48, 0.95);
+      padding: 30px 30px 50px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #00d8ff88;
+    }
+    main h2 {
+      text-align: center;
+      margin-bottom: 35px;
+      font-weight: 800;
+      font-size: 2rem;
+      color: #00d8ff;
+      text-shadow: 0 0 8px #00d8ffbb;
+    }
+
+    /* Tarjetas de rangos */
+    .rango {
+      background: #203a43;
+      border-radius: 10px;
+      padding: 25px 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 10px #00d8ff55;
+      transition: transform 0.3s ease;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 15px;
+    }
+    .rango:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 20px #00d8ffaa;
+    }
+
+    .rango-info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .rango-info h3 {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #00d8ff;
+    }
+    .rango-info span {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #a0d8ff;
+    }
+    .beneficios {
+      font-size: 0.95rem;
+      color: #cce7ffcc;
+      margin-top: 6px;
+      line-height: 1.3;
+      font-style: italic;
+    }
+
+    .botones {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+    button {
+      background-color: #00d8ff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 18px;
+      color: #02212a;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 8px #00aaccaa;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      min-width: 160px;
+    }
+    button:hover {
+      background-color: #00bfff;
+      box-shadow: 0 6px 12px #00bbffaa;
+    }
+
+    footer {
+      background-color: #141e30;
+      text-align: center;
+      padding: 20px 10px;
+      font-size: 0.9rem;
+      color: #789;
+      box-shadow: inset 0 1px 4px #00d8ff55;
+    }
+
+    /* Responsive */
+    @media (max-width: 650px) {
+      .rango {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      .botones {
+        justify-content: center;
+      }
+      nav {
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#">Inicio</a>
+    <a href="#">Reglas</a>
+    <a href="#">Contacto</a>
+    <a href="https://discord.gg/Y6dtFPV2Fz" target="_blank" rel="noopener noreferrer">Discord</a>
+  </nav>
+
+  <header>
+    <h1>Nexus Zone</h1>
+    <p>Compra tus rangos exclusivos para el servidor Minecraft y disfruta beneficios únicos.</p>
+  </header>
+
+  <main>
+    <h2>Rangos disponibles</h2>
+
+    <div class="rango">
+      <div class="rango-info">
+        <h3>Premium</h3>
+        <span>$8 USD</span>
+        <div class="beneficios">
+          Acceso a kits exclusivos, prioridad en cola, y etiquetas personalizadas.
+        </div>
+      </div>
+      <div class="botones">
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" style="margin:0;">
+          <input type="hidden" name="cmd" value="_xclick" />
+          <input type="hidden" name="business" value="TU_PAYPAL_EMAIL_AQUI" />
+          <input type="hidden" name="item_name" value="Rango Premium Minecraft" />
+          <input type="hidden" name="amount" value="8.00" />
+          <input type="hidden" name="currency_code" value="USD" />
+          <button type="submit" aria-label="Pagar Premium con PayPal">Pagar con PayPal</button>
+        </form>
+
+        <form action="https://www.mercadopago.com.mx/checkout/v1/redirect" method="POST" target="_blank" style="margin:0;">
+          <input type="hidden" name="preference_id" value="TU_PREFERENCE_ID_PREMIUM" />
+          <button type="submit" aria-label="Pagar Premium con Mercado Pago">Pagar con Mercado Pago</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="rango">
+      <div class="rango-info">
+        <h3>Ultra Premium (mensual)</h3>
+        <span>$15 USD / mes</span>
+        <div class="beneficios">
+          Todos los beneficios de Premium + acceso VIP a eventos y servidor exclusivo.
+        </div>
+      </div>
+      <div class="botones">
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" style="margin:0;">
+          <input type="hidden" name="cmd" value="_xclick-subscriptions" />
+          <input type="hidden" name="business" value="TU_PAYPAL_EMAIL_AQUI" />
+          <input type="hidden" name="item_name" value="Rango Ultra Premium Minecraft (mensual)" />
+          <input type="hidden" name="a3" value="15.00" />
+          <input type="hidden" name="p3" value="1" />
+          <input type="hidden" name="t3" value="M" />
+          <input type="hidden" name="src" value="1" />
+          <input type="hidden" name="currency_code" value="USD" />
+          <button type="submit" aria-label="Pagar Ultra Premium con PayPal">Pagar con PayPal</button>
+        </form>
+
+        <form action="https://www.mercadopago.com.mx/checkout/v1/redirect" method="POST" target="_blank" style="margin:0;">
+          <input type="hidden" name="preference_id" value="TU_PREFERENCE_ID_ULTRA_PREMIUM" />
+          <button type="submit" aria-label="Pagar Ultra Premium con Mercado Pago">Pagar con Mercado Pago</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="rango">
+      <div class="rango-info">
+        <h3>Super Premium</h3>
+        <span>$10 USD</span>
+        <div class="beneficios">
+          Prioridad alta en cola, kits mejorados y comandos exclusivos.
+        </div>
+      </div>
+      <div class="botones">
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" style="margin:0;">
+          <input type="hidden" name="cmd" value="_xclick" />
+          <input type="hidden" name="business" value="TU_PAYPAL_EMAIL_AQUI" />
+          <input type="hidden" name="item_name" value="Rango Super Premium Minecraft" />
+          <input type="hidden" name="amount" value="10.00" />
+          <input type="hidden" name="currency_code" value="USD" />
+          <button type="submit" aria-label="Pagar Super Premium con PayPal">Pagar con PayPal</button>
+        </form>
+
+        <form action="https://www.mercadopago.com.mx/checkout/v1/redirect" method="POST" target="_blank" style="margin:0;">
+          <input type="hidden" name="preference_id" value="TU_PREFERENCE_ID_SUPER_PREMIUM" />
+          <button type="submit" aria-label="Pagar Super Premium con Mercado Pago">Pagar con Mercado Pago</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="rango">
+      <div class="rango-info">
+        <h3>Héroe</h3>
+        <span>$4 USD</span>
+        <div class="beneficios">
+          Acceso a comandos básicos exclusivos y etiqueta especial en chat.
+        </div>
+      </div>
+      <div class="botones">
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" style="margin:0;">
+          <input type="hidden" name="cmd" value="_xclick" />
+          <input type="hidden" name="business" value="TU_PAYPAL_EMAIL_AQUI" />
+          <input type="hidden" name="item_name" value="Rango Héroe Minecraft" />
+          <input type="hidden" name="amount" value="4.00" />
+          <input type="hidden" name="currency_code" value="USD" />
+          <button type="submit" aria-label="Pagar Héroe con PayPal">Pagar con PayPal</button>
+        </form>
+
+        <form action="https://www.mercadopago.com.mx/checkout/v1/redirect" method="POST" target="_blank" style="margin:0;">
+          <input type="hidden" name="preference_id" value="TU_PREFERENCE_ID_HEROE" />
+          <button type="submit" aria-label="Pagar Héroe con Mercado Pago">Pagar con Mercado Pago</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="rango">
+      <div class="rango-info">
+        <h3>Elite</h3>
+        <span>$3.99 USD</span>
+        <div class="beneficios">
+          Pequeños beneficios exclusivos y prioridad en el chat.
+        </div>
+      </div>
+      <div class="botones">
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" style="margin:0;">
+          <input type="hidden" name="cmd" value="_xclick" />
+          <input type="hidden" name="business" value="TU_PAYPAL_EMAIL_AQUI" />
+          <input type="hidden" name="item_name" value="Rango Elite Minecraft" />
+          <input type="hidden" name="amount" value="3.99" />
+          <input type="hidden" name="currency_code" value="USD" />
+          <button type="submit" aria-label="Pagar Elite con PayPal">Pagar con PayPal</button>
+        </form>
+
+        <form action="https://www.mercadopago.com.mx/checkout/v1/redirect" method="POST" target="_blank" style="margin:0;">
+          <input type="hidden" name="preference_id" value="TU_PREFERENCE_ID_ELITE" />
+          <button type="submit" aria-label="Pagar Elite con Mercado Pago">Pagar con Mercado Pago</button>
+        </form>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>© 2025 Nexus Zone. Todos los derechos reservados.</p>
+    <p>
+      Síguenos en
+      <a href="https://discord.gg/Y6dtFPV2Fz" target="_blank" rel="noopener noreferrer" style="color:#00d8ff; text-decoration:none;">Discord</a> |
+      <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" style="color:#00d8ff; text-decoration:none;">Twitter</a> |
+      <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" style="color:#00d8ff; text-decoration:none;">Facebook</a>
+    </p>
+  </footer>
+
+</body>
+</html>
